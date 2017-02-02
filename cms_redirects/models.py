@@ -13,9 +13,9 @@ RESPONSE_CODES = (
 class CMSRedirect(models.Model):
     page = PageField(verbose_name=_("page"), blank=True, null=True, help_text=_("A link to a page has priority over a text link."))
     site = models.ForeignKey(Site)
-    old_path = models.CharField(_('redirect from'), max_length=200, db_index=True,
+    old_path = models.CharField(_('redirect from'), max_length=255, db_index=True,
         help_text=_("This should be an absolute path, excluding the domain name. Example: '/events/search/'."))
-    new_path = models.CharField(_('redirect to'), max_length=200, blank=True,
+    new_path = models.CharField(_('redirect to'), max_length=255, blank=True,
         help_text=_("This can be either an absolute path (as above) or a full URL starting with 'http://'."))
     response_code = models.CharField(_('response code'), max_length=3, choices=RESPONSE_CODES, default=RESPONSE_CODES[0][0],
         help_text=_("This is the http response code returned if a destination is specified. If no destination is specified the response code will be 410."))
