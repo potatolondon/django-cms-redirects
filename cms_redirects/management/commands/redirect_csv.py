@@ -1,4 +1,4 @@
-import StringIO
+import io
 import csv
 import datetime
 import operator
@@ -6,7 +6,6 @@ import operator
 from django.core.management.base import BaseCommand, CommandError
 from django.contrib.sites.models import Site
 from django.conf import settings
-from django.utils import simplejson
 
 from optparse import make_option
 
@@ -50,7 +49,7 @@ class Command(BaseCommand):
     
     
     def execute(self, *args, **options):
-        output = StringIO.StringIO()
+        output = io.StringIO()
         writer = csv.writer(output)
         writer.writerow(['Old Url','New Url','Response Code'])
         writer.writerow(["/old.html","/new",'301, 302 or 410'])
@@ -71,7 +70,7 @@ class Command(BaseCommand):
             for url, visits in sorted_data:
                 writer.writerow([csv_safe(url),'',''])
                 
-        print output.getvalue()
+        print(output.getvalue())
         
 def csv_safe(s):
     if isinstance(s,basestring):
