@@ -27,10 +27,10 @@ class Command(BaseCommand):
         
         if not os.path.exists(csv_path):
             raise CommandError("File not found, invalid path: %s" % csv_path)
-        csv_file = open(csv_path, "rb")
+        csv_file = open(csv_path, "rt")
         reader = csv.reader(csv_file)
-        header_row = reader.next()
-        if header_row != ["Old Url","New Url","Response Code"]:
+        header_row = reader.__next__()
+        if header_row[:3] != ["Old Url","New Url","Response Code"]:
             raise CommandError("CSV file is missing the correct header row.  Should be Old Url, New Url and Response Code")
         reader = csv.DictReader(csv_file, header_row)
             
@@ -51,12 +51,3 @@ class Command(BaseCommand):
             redirect.new_path = new_url
             redirect.response_code = resp_code
             redirect.save()
-            
-        
-        
-        
-            
-            
-          
-          
-        
